@@ -1,0 +1,108 @@
+PRODUCTO**
+
+SELECT P.`codigo_producto`,P.`nombre_producto`, T.`nombre_tipoproducto`, V.`nombre_empresa`,I.`cantidad_producto`,
+S.`existencia`,D.`codigo_factura`,C.`codigo_compra`, C.`cantidad_producto` CANT_COMPRA
+FROM producto P
+INNER JOIN proveedor V 
+ON P.codigo_proveedor = V.codigo_proveedor
+INNER JOIN tipo_producto T
+ON P.codigo_tipoproducto = T.codigo_tipoproducto
+INNER JOIN `inventario` I ON P.`codigo_producto` = I.`codigo_inventario`
+INNER JOIN `stock` S ON P.`codigo_producto` = S.`codigo_producto`
+INNER JOIN `detalle_venta` D ON P.`codigo_producto` = D.`codigo_producto`
+INNER JOIN `detalle_compra` C ON P.`codigo_producto` = C.`codigo_producto`
+
+::::::::::::::::::::::::::::::::::::
+VENTAS***
+
+SELECT F.codigo_factura,F.codigo_usuario, F.codigo_cliente, 
+F.fecha_venta,F.total, 
+E.nombre_empleado, E.apellido_empleado,
+C.nombre_cliente, C.telefono Telefono_Cliente
+FROM factura F
+INNER JOIN usuario U On F.codigo_usuario = U.codigo_usuario
+INNER JOIN cliente C ON F.codigo_cliente = C.codigo_cliente
+INNER JOIN empleado E ON U.codigo_empleado = E.codigo_empleado
+ORDER BY F.fecha_venta
+
+
+::::::::::::::::::::::::::::::::::::::::
+
+COMPRAS**
+
+SELECT C.`codigo_compra`,C.`codigo_usuario`, C.`fecha_compra`, C.`total`,
+D.`cantidad_producto`, D.`precio_tot_producto`,
+E.nombre_empleado, E.apellido_empleado
+FROM `compra` C
+INNER JOIN `usuario` U On C.`codigo_usuario` = U.`codigo_usuario`
+INNER JOIN `empleado` E ON U.`codigo_empleado` = E.`codigo_empleado`
+INNER JOIN `detalle_compra` D ON C.`codigo_compra` = D.`codigo_compra`
+ORDER BY C.`fecha_compra`
+
+::::::::::::::::::::::::::::::::::::::::::
+
+FACTURACIÓN**
+
+SELECT F.codigo_factura, E.nombre_empleado, E.apellido_empleado,
+A.nombre_cargo, C.nombre_cliente, C.direccion Dirección_Cliente, F.fecha_venta, F.total
+FROM factura F
+INNER JOIN usuario U ON F.codigo_usuario = U.codigo_usuario
+INNER JOIN empleado E ON U.codigo_empleado = E.codigo_empleado
+INNER JOIN cargo A ON E.codigo_cargo = A.codigo_cargo
+INNER JOIN cliente C ON F.codigo_cliente = C.codigo_cliente
+ORDER BY F.fecha_venta
+
+******STOCK************************
+
+SELECT S.`id_stock`, B.`nombre_bodega`, P.`nombre_producto`, O.`nombre_empresa`,
+V.`codigo_venta`, S.`existencia`, I.`cantidad_producto`
+FROM `stock` S
+INNER JOIN `bodega` B ON S.`codigo_bodega` = B.`codigo_bodega`
+INNER JOIN `producto` P ON S.`codigo_producto` = P.`codigo_producto`
+INNER JOIN `proveedor` O ON P.`codigo_proveedor` = O.`codigo_proveedor`
+INNER JOIN `detalle_venta` V ON V.`codigo_producto` = P.`codigo_producto`
+INNER JOIN `inventario` I ON S.`id_stock` = I.`codigo_inventario`
+
+
+********EMPLEADO*****************
+
+
+SELECT E.`codigo_empleado`,C.`nombre_cargo`, E.`nombre_empleado`, E.`apellido_empleado`,
+E.`dui`, E.`correo`, U.`codigo_usuario`, E.`fecha_ingreso`
+FROM `empleado` E
+INNER JOIN `cargo` C ON E.`codigo_cargo` = C.`codigo_cargo`
+INNER JOIN `usuario` U ON E.`codigo_empleado` = U.`codigo_empleado`
+ORDER BY E.fecha_ingreso
+
+
+********PROVEEDOR*****************
+
+SELECT O.`codigo_proveedor`, O.`nombre_empresa`, P.`nombre_producto`, O.`representante_empresa`, O.`identificacion`, 
+P.`precio_compra`, S.`existencia`, B.`nombre_bodega`
+FROM `proveedor` O
+INNER JOIN `producto` P ON O.`codigo_proveedor` = P.`codigo_proveedor`
+INNER JOIN `stock` S ON P.`codigo_producto` = S.`codigo_producto`
+INNER JOIN `bodega` B ON S.`codigo_bodega` = B.`codigo_bodega`
+ORDER BY O.`codigo_proveedor
+
+*********BODEGA******************
+
+SELECT B.`codigo_bodega`, B.`nombre_bodega`, P.`nombre_producto`, I.`tipo_movimiento`,
+ S.`existencia`, B.`telefono`, B.`direccion`, B.`descripcion`
+FROM `bodega` B
+INNER JOIN `inventario` I ON B.`codigo_bodega` = I.`codigo_bodega`
+INNER JOIN `stock` S ON B.`codigo_bodega` = S.`codigo_bodega`
+INNER JOIN `producto` P ON S.`codigo_producto` = P.`codigo_producto`
+ORDER BY B.`codigo_bodega`
+
+******** USUARIO ***********
+
+SELECT U.`codigo_usuario`, T.`codigo_tipoUsuario`, T.`nombre_tipoUsuario`, E.`nombre_empleado`, E.`apellido_empleado`,
+C.`nombre_cargo`, U.`usuario_login`, U.`password_usuario`, E.`fecha_ingreso`
+FROM `usuario` U 
+INNER JOIN `tipo_usuario` T ON U.`codigo_tipoUsuario` = T.`codigo_tipoUsuario`
+INNER JOIN `empleado` E ON U.`codigo_empleado` = E.`codigo_empleado`
+INNER JOIN `cargo` C ON E.`codigo_cargo` = C.`codigo_cargo`
+ORDER BY E.`fecha_ingreso`
+
+

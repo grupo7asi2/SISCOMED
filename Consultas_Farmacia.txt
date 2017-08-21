@@ -41,10 +41,10 @@ ORDER BY C.`fecha_compra`
 
 ::::::::::::::::::::::::::::::::::::::::::
 
-FACTURACIÓN**
+FACTURACIÃ“N**
 
 SELECT F.codigo_factura, E.nombre_empleado, E.apellido_empleado,
-A.nombre_cargo, C.nombre_cliente, C.direccion Dirección_Cliente, F.fecha_venta, F.total
+A.nombre_cargo, C.nombre_cliente, C.direccion DirecciÃ³n_Cliente, F.fecha_venta, F.total
 FROM factura F
 INNER JOIN usuario U ON F.codigo_usuario = U.codigo_usuario
 INNER JOIN empleado E ON U.codigo_empleado = E.codigo_empleado
@@ -83,7 +83,7 @@ FROM `proveedor` O
 INNER JOIN `producto` P ON O.`codigo_proveedor` = P.`codigo_proveedor`
 INNER JOIN `stock` S ON P.`codigo_producto` = S.`codigo_producto`
 INNER JOIN `bodega` B ON S.`codigo_bodega` = B.`codigo_bodega`
-ORDER BY O.`codigo_proveedor
+ORDER BY O.`codigo_proveedor`
 
 *********BODEGA******************
 

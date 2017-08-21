@@ -26,7 +26,7 @@ INNER JOIN empleado E ON U.codigo_empleado = E.codigo_empleado
 ORDER BY F.fecha_venta
 
 
-::::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::
 
 COMPRAS**
 
